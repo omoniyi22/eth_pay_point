@@ -38,6 +38,13 @@ export const TransactionProvider = ({ children }) => {
         }))
     }
 
+    const disconnectWallet = async () => {
+        setCurrentAccount("");
+        setCurrentTransactions([]);
+        toast("Wallet disconnected");
+        localStorage.removeItem("transactionCount");
+
+    };
 
     const getAllTransactions = async () => {
         try {
@@ -66,6 +73,7 @@ export const TransactionProvider = ({ children }) => {
             console.log(error)
         }
     }
+
 
     const checkIfWalletIsConnected = async () => {
         try {
@@ -125,6 +133,9 @@ export const TransactionProvider = ({ children }) => {
         }
     }
 
+
+
+
     const checkIfTransactionExist = async () => {
         try {
             const { transactionContract } = await getEthereumContract();
@@ -144,8 +155,8 @@ export const TransactionProvider = ({ children }) => {
 
             setCurrentAccount(accounts[0])
 
-            // getAllTransactions();
-
+            await getAllTransactions();
+            toast("Wallet Connected")
             console.log(accounts)
         } catch (error) {
             console.log(error)
@@ -154,12 +165,12 @@ export const TransactionProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        checkIfWalletIsConnected();
+        // checkIfWalletIsConnected();
         checkIfTransactionExist();
     }, [])
 
     return (
-        <TransactionContext.Provider value={{ connectWallet, currentAccount, formData, handleChange, sendTransaction, transactions, isLoading }}>
+        <TransactionContext.Provider value={{ connectWallet, currentAccount, formData, handleChange, sendTransaction, transactions, isLoading, disconnectWallet }}>
             {children}
         </TransactionContext.Provider>
     )
