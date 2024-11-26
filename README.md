@@ -11,5 +11,5 @@ After deploying the smart contract with hardhat using the deploy.js script, I mo
 From then, I used ethers to interact with smart contract to query and send payment on the platform.
 
 Here is the link to site.
-Ethpay:
+Ethpay: https://eth-pay.onrender.com
 
